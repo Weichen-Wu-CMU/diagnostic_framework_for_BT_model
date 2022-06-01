@@ -199,9 +199,10 @@ bt.obj.diagnostics <- function(W, bt.results,
   # Boxplot for object residuals
   p1 = ggplot(obj.diag,aes(x = factor(0), y=residual)) + 
     geom_boxplot() +
-    theme(axis.title.x=element_blank(),
-          axis.text.x=element_blank(),
-          axis.ticks.x=element_blank()) +
+#    theme(axis.title.x='Boxplot',
+#          axis.text.x=element_blank(),
+#          axis.ticks.x=element_blank()) +
+    xlab('Boxplot') +
     ylab(TeX('Residuals ($r_i$)')) 
   
   # Normal Q-Q plot for object residuals
@@ -462,6 +463,7 @@ bt.visualize <- function(W, bt.results,
     #                            order(bt.scores,decreasing = T)]
     
     zscore.matrix = heat.matrix[1:top,1:top]
+    zscore.matrix[zscore.matrix < 0] = 0
     
     x = as.character(seq(1,top))
     y = paste(x,used.results$Summary,sep = '.')
@@ -469,7 +471,7 @@ bt.visualize <- function(W, bt.results,
     heat.data$Z = as.vector(t(zscore.matrix))
     p = ggplot(heat.data, aes(X, Y, fill= Z)) + 
       geom_tile() +
-      scale_fill_gradient2(high="red", mid= 'white',low = 'navy') +
+      scale_fill_gradient2(high="red", low = 'white') +
       theme(axis.text.x = element_text(angle=0, hjust=1, vjust=.5)) + 
       scale_x_discrete(limits = x[order(used.results$est,decreasing = T)],
                        position = 'top') +

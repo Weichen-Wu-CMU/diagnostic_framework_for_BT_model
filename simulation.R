@@ -46,16 +46,27 @@ for(t in 1:100) # iterate through 100 subjects
 # Fit the Bradley-Terry model
 bt.scores = fit.bt.model(W)
 
-# Uncomment the following line to check the relationship bewteen the 
-# fitted score and the real scores
-#plot(bt.scores$bt.scores,real.scores,
-#     xlab = 'BT scores',
-#     ylab = 'real scores')
+# Relationship between real and estimated ranks
+est.rank = order(bt.scores$bt.scores)
+rankings = matrix(data = NA, nrow = 21, ncol = 2)
+colnames(rankings) = c('real','est')
+rankings = as.data.frame(rankings)
+rankings$real = seq(1,21)
+rankings$est = est.rank
+# Figure 2 on page 10 of the paper
+ggplot(rankings,aes(x = real,y=est)) + 
+  geom_point()+
+  xlab(TeX('Rank in  $\\beta^*_j$')) +
+  ylab(TeX('Rank in $\\hat{\\beta}_j$')) +
+  theme(axis.title = element_text(size = 20),
+        axis.text = element_text(size = 15),
+        legend.position = 'none')
+  
 
 # Object diagnostic plots
 obj.diag.plots = bt.obj.diagnostics(W, bt.scores)
 
-# QQ plot of residuals, Figure 1 on page in the paper
+# QQ plot of residuals, Figure 1 on page 10 in the paper
 obj.diag.plots$r.qqplot +
   theme(axis.title = element_text(size = 20),
           axis.text = element_text(size = 15))
@@ -81,14 +92,14 @@ bt.results = fit.bt.model(W)
 
 # Uncomment the following line to check the relationship bewteen the 
 # fitted score and the real scores
-# plot(bt.scores,real.scores)
+plot(bt.results$bt.scores,real.scores)
 
 # Object diagnostic plots
 obj.diag.plots = bt.obj.diagnostics(W, bt.results)
 
 
 # Relationship bewteen residuals and Bradley-Terry scores
-# (Figure 2 of the paper)
+# (Figure 3 on page 10 of the paper)
 obj.diag.plots$r.vs.scores +
   theme(axis.title = element_text(size = 20),
             axis.text = element_text(size = 15))
@@ -125,7 +136,7 @@ for(i in 1:21)
   probs$est11[i] = sigmoid(-bt.scores[i])
 }
 
-# Exploration of object 1 (Left plot of Figure 3 in the paper)
+# Exploration of object 1 (Left plot of Figure 4 in the paper)
 ggplot(probs, aes(x = bt.scores)) +
   geom_point(aes(y = real1, 
                  shape = 'Real')) +
@@ -139,7 +150,7 @@ ggplot(probs, aes(x = bt.scores)) +
         axis.text = element_text(size = 15),
         legend.position = 'none')
 
-# Exploration of object 11 (Right plot of Figure 3 in the paper)
+# Exploration of object 11 (Right plot of Figure 4 in the paper)
 ggplot(probs, aes(x = bt.scores)) +
   geom_point(aes(y = real11, shape = 'Real')) +
   geom_line(aes(y = real11)) +

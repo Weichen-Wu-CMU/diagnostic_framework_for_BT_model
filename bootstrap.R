@@ -81,7 +81,7 @@ for(voter in voters.list)
   sim.voter.diag[voter,'influence'] = sum(infl**2)
 }
 
-# Left plot of Figure 9 on page 22 of the paper
+# Left plot of Figure 11 on page 23 of the paper
 diff_bootstrap1 = 
   ggplot(data = sim.voter.diag, aes(x = num.votes, y = difference))+
   geom_point() +
@@ -98,7 +98,7 @@ diff_bootstrap1 =
   scale_color_discrete('')
 diff_bootstrap1
 
-# Right plot of Figure 9 on page 22 of the paper
+# Right plot of Figure 11 on page 23 of the paper
 inf_bootstrap1 = 
   ggplot(data = sim.voter.diag, aes(x = num.votes, y = influence))+
   geom_point() +
@@ -151,7 +151,7 @@ for(voter in voters.list)
   sim.voter.diag2[voter,'influence'] = sum(infl**2)
 }
 
-# Left plot of Figure 10 on page 23 of the paper
+# Left plot of Figure 12 on page 24 of the paper
 diff_bootstrap2 = 
   ggplot(data = sim.voter.diag2, aes(x = num.votes, y = difference))+
   geom_point() +
@@ -168,7 +168,7 @@ diff_bootstrap2 =
   scale_color_discrete('')
 diff_bootstrap2
 
-# Right plot of Figure 10 on page 23 of the paper
+# Right plot of Figure 12 on page 24 of the paper
 inf_bootstrap2 = 
   ggplot(data = sim.voter.diag2, aes(x = num.votes, y = influence))+
   geom_point() +
